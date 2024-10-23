@@ -55,25 +55,126 @@ class RegisterPage extends StatelessWidget {
               color: const Color(0xFF346BC3),
               height: 8,
             ),
+            const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Nombre y apellido",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/person.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/mail.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Teléfono",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/phone.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Contraseña",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/lock.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  suffix: Image(
+                    image: AssetImage("assets/images/visibility.png"),
+                    height: 16,
+                    width: 16,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Confirmar contraseña",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/lock.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  suffix: Image(
+                    image: AssetImage("assets/images/visibility.png"),
+                    height: 16,
+                    width: 16,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 32, right: 32, top: 42),
@@ -100,7 +201,7 @@ class RegisterPage extends StatelessWidget {
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 54),
+                padding: const EdgeInsets.only(top: 54, bottom: 32),
                 child: Text.rich(
                   TextSpan(
                     text: "Ya tengo cuenta ",

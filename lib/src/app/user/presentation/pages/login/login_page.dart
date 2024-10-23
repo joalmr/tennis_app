@@ -58,11 +58,48 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/mail.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
-              child: TextFormField(),
+              child: TextFormField(
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: "Contraseña",
+                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image(
+                      image: AssetImage("assets/images/lock.png"),
+                      height: 16,
+                      width: 16,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 12,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
@@ -113,7 +150,7 @@ class LoginPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     )),
-                onPressed: () {},
+                onPressed: () => context.go('/home'),
                 child: const Text("Iniciar sesión"),
               ),
             ),
