@@ -63,8 +63,7 @@ class HomePage extends StatelessWidget {
                         onPressed: () async {
                           //! Cerrar sesion en supabase
                           await providerAuth.signOut();
-                          if (!context.mounted) return;
-                          context.go("/");
+                          if (context.mounted) context.go("/");
                         },
                         child: const Text('Cerrar sesión'),
                       ),

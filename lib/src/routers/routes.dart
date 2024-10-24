@@ -20,13 +20,13 @@ final GoRouter goRoute = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) {
-        return const LoginPage();
+        return LoginPage();
       },
     ),
     GoRoute(
       path: '/register',
       builder: (context, state) {
-        return const RegisterPage();
+        return RegisterPage();
       },
     ),
     GoRoute(

@@ -6,14 +6,14 @@ import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart
 import 'package:tennis_app/src/styles/colors.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final controllerEmail = TextEditingController();
+  final controllerPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<AuthProvider>();
-
-    final controllerEmail = TextEditingController();
-    final controllerPassword = TextEditingController();
+    final provider = context.watch<AuthProvider>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -113,14 +113,19 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () async {
+                  //TODO: guardar datos si el casillero de recordar contraseña esta activado
+                  await provider.rememberMe();
+                },
                 child: Row(
                   children: [
                     Container(
                       height: 20,
                       width: 20,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: provider.checkRemember
+                            ? kPrimaryColor
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(color: Colors.black38, width: 0.5),
                       ),

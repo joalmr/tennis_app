@@ -8,6 +8,7 @@ class AuthProvider extends ChangeNotifier {
 
   bool registerUser = false;
   bool loginUser = false;
+  bool checkRemember = false;
 
   signUp(String email, String password, String fullName, String phone) async {
     final response = await authUsecase.signUp(email, password, fullName, phone);
@@ -31,5 +32,11 @@ class AuthProvider extends ChangeNotifier {
 
   signOut() async {
     await authUsecase.signOut();
+    notifyListeners();
+  }
+
+  rememberMe() {
+    checkRemember = !checkRemember;
+    notifyListeners();
   }
 }
