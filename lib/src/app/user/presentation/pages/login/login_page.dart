@@ -114,7 +114,6 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
               child: GestureDetector(
                 onTap: () async {
-                  //TODO: guardar datos si el casillero de recordar contraseña esta activado
                   await provider.rememberMe();
                 },
                 child: Row(
@@ -172,6 +171,7 @@ class LoginPage extends StatelessWidget {
                   );
 
                   if (provider.loginUser) {
+                    //TODO: guardar datos si el casillero de recordar contraseña esta activado
                     if (!context.mounted) return;
                     context.go('/home');
                   }

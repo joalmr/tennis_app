@@ -17,6 +17,7 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.read<AuthProvider>();
+    final pWatch = context.watch<AuthProvider>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -141,11 +142,11 @@ class RegisterPage extends StatelessWidget {
               child: TextFormField(
                 controller: controllerPassword,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: pWatch.togglePasswordVisibility,
+                decoration: InputDecoration(
                   labelText: "Contraseña",
-                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
-                  prefix: Padding(
+                  labelStyle: const TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: const Padding(
                     padding: EdgeInsets.only(right: 8),
                     child: Image(
                       image: AssetImage("assets/images/lock.png"),
@@ -153,12 +154,15 @@ class RegisterPage extends StatelessWidget {
                       width: 16,
                     ),
                   ),
-                  suffix: Image(
-                    image: AssetImage("assets/images/visibility.png"),
-                    height: 16,
-                    width: 16,
+                  suffix: GestureDetector(
+                    onTap: () => provider.togglePassword(),
+                    child: const Image(
+                      image: AssetImage("assets/images/visibility.png"),
+                      height: 16,
+                      width: 16,
+                    ),
                   ),
-                  contentPadding: EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                     vertical: 0,
                     horizontal: 12,
                   ),
@@ -170,11 +174,11 @@ class RegisterPage extends StatelessWidget {
               child: TextFormField(
                 controller: controllerPasswordRepeat,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: pWatch.togglePasswordVisibilityRepeat,
+                decoration: InputDecoration(
                   labelText: "Confirmar contraseña",
-                  labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
-                  prefix: Padding(
+                  labelStyle: const TextStyle(color: Color(0xFF9B9C9D)),
+                  prefix: const Padding(
                     padding: EdgeInsets.only(right: 8),
                     child: Image(
                       image: AssetImage("assets/images/lock.png"),
@@ -182,12 +186,15 @@ class RegisterPage extends StatelessWidget {
                       width: 16,
                     ),
                   ),
-                  suffix: Image(
-                    image: AssetImage("assets/images/visibility.png"),
-                    height: 16,
-                    width: 16,
+                  suffix: GestureDetector(
+                    onTap: () => provider.togglePasswordRepeat(),
+                    child: const Image(
+                      image: AssetImage("assets/images/visibility.png"),
+                      height: 16,
+                      width: 16,
+                    ),
                   ),
-                  contentPadding: EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                     vertical: 0,
                     horizontal: 12,
                   ),

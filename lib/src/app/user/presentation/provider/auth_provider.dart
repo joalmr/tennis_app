@@ -9,6 +9,8 @@ class AuthProvider extends ChangeNotifier {
   bool registerUser = false;
   bool loginUser = false;
   bool checkRemember = false;
+  bool togglePasswordVisibility = true;
+  bool togglePasswordVisibilityRepeat = true;
 
   signUp(String email, String password, String fullName, String phone) async {
     final response = await authUsecase.signUp(email, password, fullName, phone);
@@ -37,6 +39,16 @@ class AuthProvider extends ChangeNotifier {
 
   rememberMe() {
     checkRemember = !checkRemember;
+    notifyListeners();
+  }
+
+  togglePassword() {
+    togglePasswordVisibility = !togglePasswordVisibility;
+    notifyListeners();
+  }
+
+  togglePasswordRepeat() {
+    togglePasswordVisibilityRepeat = !togglePasswordVisibilityRepeat;
     notifyListeners();
   }
 }
