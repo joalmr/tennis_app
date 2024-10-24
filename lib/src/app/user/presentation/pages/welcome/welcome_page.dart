@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tennis_app/src/shared/primary_button.dart';
+import 'package:tennis_app/src/shared/secondary_button.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -50,52 +52,18 @@ class WelcomePage extends StatelessWidget {
                         const EdgeInsets.only(left: 32, right: 32, bottom: 20),
                     width: MediaQuery.of(context).size.width,
                     height: 53,
-                    child: ElevatedButton(
-                      style: const ButtonStyle(
-                          backgroundColor:
-                              WidgetStatePropertyAll(kPrimaryColor),
-                          foregroundColor:
-                              WidgetStatePropertyAll(kTextColorContrast),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                          ),
-                          textStyle: WidgetStatePropertyAll(
-                            TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+                    child: KPrimaryButton(
+                      textButton: "Iniciar sesión",
                       onPressed: () => context.push('/login'),
-                      child: const Text("Iniciar sesión"),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 32),
                     width: MediaQuery.of(context).size.width,
                     height: 53,
-                    child: ElevatedButton(
-                      style: const ButtonStyle(
-                          backgroundColor:
-                              WidgetStatePropertyAll(Colors.white24),
-                          foregroundColor:
-                              WidgetStatePropertyAll(kTextColorContrast),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                          ),
-                          textStyle: WidgetStatePropertyAll(
-                            TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+                    child: KSecondaryButton(
+                      textButton: "Registrarme",
                       onPressed: () => context.push('/register'),
-                      child: const Text("Registrarme"),
                     ),
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
+import 'package:tennis_app/src/shared/primary_button.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class LoginPage extends StatelessWidget {
@@ -162,43 +163,27 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 32, right: 32, top: 42),
-                width: MediaQuery.of(context).size.width,
-                height: 53,
-                child: ElevatedButton(
-                  style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(kPrimaryColor),
-                      foregroundColor:
-                          WidgetStatePropertyAll(kTextColorContrast),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                      ),
-                      textStyle: WidgetStatePropertyAll(
-                        TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      //! sign in con provider
-                      await provider.signIn(
-                        controllerEmail.text,
-                        controllerPassword.text,
-                      );
+                  margin: const EdgeInsets.only(left: 32, right: 32, top: 42),
+                  width: MediaQuery.of(context).size.width,
+                  height: 53,
+                  child: KPrimaryButton(
+                    textButton: "Iniciar sesión",
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        //! sign in con provider
+                        await provider.signIn(
+                          controllerEmail.text,
+                          controllerPassword.text,
+                        );
 
-                      if (provider.loginUser) {
-                        //TODO: guardar datos si el casillero de recordar contraseña esta activado
-                        if (!context.mounted) return;
-                        context.go('/home');
+                        if (provider.loginUser) {
+                          //TODO: guardar datos si el casillero de recordar contraseña esta activado
+                          if (!context.mounted) return;
+                          context.go('/home');
+                        }
                       }
-                    }
-                  },
-                  child: const Text("Iniciar sesión"),
-                ),
-              ),
+                    },
+                  )),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 54),
