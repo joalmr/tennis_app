@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -8,6 +10,14 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<AuthProvider>();
+
+    final controllerEmail = TextEditingController();
+    final controllerPassword = TextEditingController();
+    final controllerPasswordRepeat = TextEditingController();
+    final controllerFullName = TextEditingController();
+    final controllerPhone = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -59,6 +69,7 @@ class RegisterPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerFullName,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Nombre y apellido",
@@ -81,6 +92,7 @@ class RegisterPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Email",
@@ -103,6 +115,7 @@ class RegisterPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerPhone,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Teléfono",
@@ -125,7 +138,9 @@ class RegisterPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerPassword,
                 keyboardType: TextInputType.emailAddress,
+                obscureText: true,
                 decoration: const InputDecoration(
                   labelText: "Contraseña",
                   labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
@@ -152,7 +167,9 @@ class RegisterPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerPasswordRepeat,
                 keyboardType: TextInputType.emailAddress,
+                obscureText: true,
                 decoration: const InputDecoration(
                   labelText: "Confirmar contraseña",
                   labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
@@ -195,7 +212,23 @@ class RegisterPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     )),
-                onPressed: () {},
+                onPressed: () async {
+                  //! sign up con provider
+                  if (controllerPassword.text ==
+                      controllerPasswordRepeat.text) {
+                    await provider.signUp(
+                      controllerEmail.text,
+                      controllerPassword.text,
+                      controllerFullName.text,
+                      controllerPhone.text,
+                    );
+
+                    if (provider.registerUser) {
+                      if (!context.mounted) return;
+                      context.go('/home');
+                    }
+                  }
+                },
                 child: const Text("Registrarme"),
               ),
             ),

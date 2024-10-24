@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class LoginPage extends StatelessWidget {
@@ -8,6 +10,11 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<AuthProvider>();
+
+    final controllerEmail = TextEditingController();
+    final controllerPassword = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -59,6 +66,7 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Email",
@@ -81,6 +89,7 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 0, 32, 16),
               child: TextFormField(
+                controller: controllerPassword,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 decoration: const InputDecoration(
@@ -150,7 +159,18 @@ class LoginPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     )),
-                onPressed: () => context.go('/home'),
+                onPressed: () async {
+                  //! sign in con provider
+                  await provider.signIn(
+                    controllerEmail.text,
+                    controllerPassword.text,
+                  );
+
+                  if (provider.loginUser) {
+                    if (!context.mounted) return;
+                    context.go('/home');
+                  }
+                },
                 child: const Text("Iniciar sesión"),
               ),
             ),

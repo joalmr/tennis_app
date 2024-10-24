@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/widgets/home/canchas_widget.dart';
 import 'package:tennis_app/src/app/tennis/presentation/widgets/home/reservas_widget.dart';
+import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,6 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerAuth = context.read<AuthProvider>();
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -42,27 +47,49 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: CircleAvatar(
-              backgroundColor: Colors.black,
-              radius: 12,
-              child: Icon(
-                Icons.person_outline,
-                color: Colors.white,
-                size: 20,
-              ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('¿Deseas cerrar sesión?'),
+                    actions: [
+                      TextButton(
+                        style: const ButtonStyle(
+                          foregroundColor: WidgetStatePropertyAll(Colors.red),
+                        ),
+                        onPressed: () async {
+                          //! Cerrar sesion en supabase
+                          await providerAuth.signOut();
+                          if (!context.mounted) return;
+                          context.go("/");
+                        },
+                        child: const Text('Cerrar sesión'),
+                      ),
+                      TextButton(
+                        onPressed: () => context.pop(),
+                        child: const Text('Cancelar'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: const Icon(
+              Icons.person_outline,
+              color: Colors.white,
             ),
           ),
-          IconButton(
+          const IconButton(
             onPressed: null,
             icon: Icon(
               Icons.notifications_none_outlined,
               color: Colors.white,
             ),
           ),
-          IconButton(
+          const IconButton(
             onPressed: null,
             icon: Icon(
               Icons.menu_outlined,
