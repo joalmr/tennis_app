@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_app/src/app/tennis/domain/entities/courts_entity.dart';
-import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/courts_usecase.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/weather_usecase.dart';
+import 'package:tennis_app/src/shared/storage.data.dart';
 
 class CourtsProvider extends ChangeNotifier {
   final CourtsUsecase courtsUsecase;
@@ -13,13 +14,14 @@ class CourtsProvider extends ChangeNotifier {
     required this.weatherUsecase,
   }) {
     getCourts();
+    getFavoriteCourts(MyStorage().uid);
   }
 
   List<CourtsEntity> courts = [];
   CourtsEntity? court;
   List<DdlTime> listTime = [];
 
-  Future<WeatherEntity> getForecastWeather(
+  Future<WeatherForecastEntity> getForecastWeather(
       String location, String date, int? hour) async {
     return await weatherUsecase.getForecastWeather(location, date, hour);
   }
@@ -44,6 +46,15 @@ class CourtsProvider extends ChangeNotifier {
           value: i + court!.start!,
         )
     ];
+  }
+
+  putFavorite(String idCustomer, int idCourt) async {
+    await courtsUsecase.favoriteCourt(idCustomer, idCourt);
+    notifyListeners();
+  }
+
+  getFavoriteCourts(String idCustomer) async {
+    await courtsUsecase.getFavoriteCourts(idCustomer);
   }
 }
 

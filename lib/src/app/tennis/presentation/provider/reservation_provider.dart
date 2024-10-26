@@ -42,7 +42,6 @@ class ReservationProvider extends ChangeNotifier {
     reservations = await reservationUsecase.getReservations();
     myReservations =
         reservations.where((x) => x.customerId == MyStorage().uid).toList();
-
     notifyListeners();
   }
 

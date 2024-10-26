@@ -1,52 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather_entity.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class ReservasWidget extends StatefulWidget {
   const ReservasWidget({
     super.key,
-    required this.canchaImg,
-    required this.canchaTitle,
+    required this.courtImg,
+    required this.courtTitle,
     required this.personReserved,
     required this.date,
     required this.hours,
     required this.price,
     required this.dt,
-    required this.timeStart,
-    required this.timeEnd,
+    required this.courtSurface,
     required this.location,
+    required this.timeStart,
   });
-  final String canchaImg;
-  final String canchaTitle;
+  final String courtImg;
+  final String courtTitle;
   final String personReserved;
   final String date;
   final String hours;
   final String price;
   final String dt;
-  final int timeStart;
-  final int timeEnd;
+  final String courtSurface;
   final String location;
+  final int timeStart;
 
   @override
   State<ReservasWidget> createState() => _ReservasWidgetState();
 }
 
 class _ReservasWidgetState extends State<ReservasWidget> {
-  ValueNotifier<WeatherEntity?> weatherEntity = ValueNotifier(null);
+  ValueNotifier<WeatherForecastEntity?> weatherEntity = ValueNotifier(null);
 
   @override
   initState() {
     super.initState();
-    getWeather();
+    getWeather().then((value) {
+      if (mounted) {
+        setState(() {
+          weatherEntity.value = value;
+        });
+      }
+    });
   }
 
-  getWeather() async {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<WeatherForecastEntity> getWeather() async {
     final providerCourts = context.read<CourtsProvider>();
-    weatherEntity.value = await providerCourts.getForecastWeather(
-        widget.location, widget.dt, null);
-    setState(() {});
+    return await providerCourts.getForecastWeather(
+        widget.location, widget.dt, widget.timeStart);
   }
 
   @override
@@ -71,7 +81,7 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                   ),
                   height: 60,
                   child: Image(
-                    image: AssetImage("assets/images/${widget.canchaImg}"),
+                    image: AssetImage("assets/images/${widget.courtImg}"),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -87,26 +97,25 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.canchaTitle,
+                            widget.courtTitle,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
-                          Row(
-                            children: [
-                              weatherEntity.value?.current == null
-                                  ? const SizedBox()
-                                  : Image.network(
-                                      'http:${weatherEntity.value!.current!.condition!.icon}',
-                                      height: 32,
-                                    ),
-                              weatherEntity.value?.current == null
-                                  ? const SizedBox()
-                                  : Text(weatherEntity.value!.current!.tempC
-                                      .toString()),
-                            ],
-                          ),
+                          Row(children: [
+                            weatherEntity.value?.forecast == null
+                                ? const SizedBox()
+                                : Image.network(
+                                    'http:${weatherEntity.value!.forecast!.forecastday!.first.hour!.first.condition!.icon}',
+                                    height: 32,
+                                  ),
+                            weatherEntity.value?.forecast == null
+                                ? const SizedBox()
+                                : Text(weatherEntity.value!.forecast!
+                                    .forecastday!.first.hour!.first.tempC
+                                    .toString()),
+                          ]),
                         ],
                       ),
                       const SizedBox(height: 8),

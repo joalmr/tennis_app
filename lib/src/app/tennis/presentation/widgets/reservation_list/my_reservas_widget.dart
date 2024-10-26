@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather_entity.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 
-class MyReservasWidget extends StatelessWidget {
+class MyReservasWidget extends StatefulWidget {
   const MyReservasWidget({
     super.key,
     required this.courtImg,
@@ -10,6 +13,9 @@ class MyReservasWidget extends StatelessWidget {
     required this.hours,
     required this.price,
     required this.courtSurface,
+    required this.dt,
+    required this.location,
+    required this.timeStart,
   });
   final String courtImg;
   final String courtTitle;
@@ -17,7 +23,41 @@ class MyReservasWidget extends StatelessWidget {
   final String date;
   final String hours;
   final String price;
+  final String dt;
   final String courtSurface;
+  final String location;
+  final int timeStart;
+
+  @override
+  State<MyReservasWidget> createState() => _MyReservasWidgetState();
+}
+
+class _MyReservasWidgetState extends State<MyReservasWidget> {
+  ValueNotifier<WeatherForecastEntity?> weatherEntity = ValueNotifier(null);
+
+  @override
+  initState() {
+    super.initState();
+    getWeather().then((value) {
+      if (mounted) {
+        setState(() {
+          weatherEntity.value = value;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<WeatherForecastEntity> getWeather() async {
+    final providerCourts = context.read<CourtsProvider>();
+    return await providerCourts.getForecastWeather(
+        widget.location, widget.dt, widget.timeStart);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,7 +84,7 @@ class MyReservasWidget extends StatelessWidget {
                   ),
                   height: 60,
                   child: Image(
-                    image: AssetImage("assets/images/$courtImg"),
+                    image: AssetImage("assets/images/${widget.courtImg}"),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -56,16 +96,34 @@ class MyReservasWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        courtTitle,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.courtTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Row(children: [
+                            weatherEntity.value?.forecast == null
+                                ? const SizedBox()
+                                : Image.network(
+                                    'http:${weatherEntity.value!.forecast!.forecastday!.first.hour!.first.condition!.icon}',
+                                    height: 32,
+                                  ),
+                            weatherEntity.value?.forecast == null
+                                ? const SizedBox()
+                                : Text(weatherEntity.value!.forecast!
+                                    .forecastday!.first.hour!.first.tempC
+                                    .toString()),
+                          ]),
+                        ],
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        courtSurface,
+                        widget.courtSurface,
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
                       const SizedBox(height: 8),
@@ -78,7 +136,7 @@ class MyReservasWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            date,
+                            widget.date,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
@@ -102,7 +160,7 @@ class MyReservasWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            personReserved,
+                            widget.personReserved,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
@@ -117,7 +175,7 @@ class MyReservasWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "$hours horas",
+                            "${widget.hours} horas",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           const VerticalDivider(
@@ -125,7 +183,7 @@ class MyReservasWidget extends StatelessWidget {
                             width: 16,
                           ),
                           Text(
-                            "\$ $price",
+                            "\$ ${widget.price}",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],

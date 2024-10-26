@@ -1,4 +1,4 @@
-import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/repositories/weather_repository.dart';
 
 class WeatherUsecase {
@@ -6,8 +6,8 @@ class WeatherUsecase {
 
   WeatherUsecase({required this.repository});
 
-  Future<WeatherEntity> getForecastWeather(
-      String location, String date, int? hour) async {
+  Future<WeatherForecastEntity> getForecastWeather(
+      String location, String date, int? hour) {
     return repository.getForecastWeather(location, date, hour);
   }
 }

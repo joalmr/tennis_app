@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather_entity.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 import 'package:tennis_app/src/shared/date_format.dart';
 import 'package:tennis_app/src/styles/colors.dart';
@@ -32,20 +32,29 @@ class CanchasWidget extends StatefulWidget {
 }
 
 class _CanchasWidgetState extends State<CanchasWidget> {
-  ValueNotifier<WeatherEntity?> weatherEntity = ValueNotifier(null);
+  ValueNotifier<WeatherForecastEntity?> weatherEntity = ValueNotifier(null);
 
   @override
   initState() {
-    getWeather(widget.location);
+    getWeather(widget.location).then((value) {
+      if (mounted) {
+        setState(() {
+          weatherEntity.value = value;
+        });
+      }
+    });
     super.initState();
   }
 
-  getWeather(String location) async {
-    final providerCourts = context.read<CourtsProvider>();
-    weatherEntity.value = await providerCourts.getForecastWeather(
-        location, DateTime.now().toIso8601String().split('T')[0], null);
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
-    setState(() {});
+  Future<WeatherForecastEntity> getWeather(String location) async {
+    final providerCourts = context.read<CourtsProvider>();
+    return await providerCourts.getForecastWeather(
+        location, DateTime.now().toIso8601String().split('T')[0], null);
   }
 
   @override

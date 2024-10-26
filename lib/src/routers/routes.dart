@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tennis_app/src/app/tennis/presentation/pages/home/home_page.dart';
+import 'package:tennis_app/src/app/tennis/presentation/pages/home/home_page_nav.dart';
 import 'package:tennis_app/src/app/tennis/presentation/pages/reservation/reservation_page.dart';
 import 'package:tennis_app/src/app/user/presentation/pages/login/login_page.dart';
 import 'package:tennis_app/src/app/user/presentation/pages/register/register_page.dart';
@@ -15,7 +15,7 @@ final GoRouter goRoute = GoRouter(
       path: '/',
       builder: (context, state) {
         return MyStorage().uid.isNotEmpty
-            ? const HomePage()
+            ? const HomePageNav()
             : const WelcomePage();
       },
     ),
@@ -34,7 +34,7 @@ final GoRouter goRoute = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) {
-        return const HomePage();
+        return const HomePageNav();
       },
     ),
     GoRoute(

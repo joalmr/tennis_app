@@ -61,15 +61,15 @@ class _ReservationListPageState extends State<ReservationListPage> {
                                     'Seguro que desea eliminar la reserva?'),
                                 actions: [
                                   TextButton(
+                                    onPressed: () => context.pop(),
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
                                     onPressed: () {
                                       provider.deleteReservation(item.id!);
                                       context.pop();
                                     },
                                     child: const Text('Eliminar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => context.pop(),
-                                    child: const Text('Cancelar'),
                                   ),
                                 ],
                               ),
@@ -78,12 +78,15 @@ class _ReservationListPageState extends State<ReservationListPage> {
                           child: MyReservasWidget(
                             courtImg: item.courts!.image!,
                             courtTitle: item.courts!.name!,
+                            courtSurface: item.courts!.surfaceType!,
+                            location: item.courts!.location!,
                             personReserved: item.customers!.name!,
                             date: formattedDate(
                                 DateTime.parse(item.reservationDate!)),
+                            dt: item.reservationDate!,
+                            timeStart: item.startTime!,
                             hours: item.timePlay.toString(),
                             price: item.totalPrice.toString(),
-                            courtSurface: item.courts!.surfaceType!,
                           ),
                         ),
                     ],

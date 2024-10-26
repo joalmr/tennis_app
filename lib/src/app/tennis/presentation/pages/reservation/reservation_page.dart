@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/widgets/reservation/ddl_instructors.dart';
 import 'package:tennis_app/src/app/tennis/presentation/widgets/reservation/ddl_time.dart';
@@ -305,7 +304,6 @@ class _ReservationPageState extends State<ReservationPage> {
                     child: KPrimaryButton(
                       textButton: 'Reservar',
                       onPressed: () async {
-                        Logger().i('Datos reserva');
                         if (provider.timeEnd! <= provider.timeStart!) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
