@@ -4,7 +4,7 @@ import 'package:tennis_app/src/app/tennis/data/models/favorite_courts_model.dart
 
 abstract class CourtsRemoteDatasource {
   Future<List<CourtsModel>> getCourts();
-  Future<bool> favoriteCourt(String idCustomer, int idCourt);
+  Future<void> favoriteCourt(String idCustomer, int idCourt);
   Future<List<FavoriteCourtsModel>> getFavoriteCourts(String idCustomer);
 }
 
@@ -19,8 +19,7 @@ class CourtsRemoteDatasourceImpl implements CourtsRemoteDatasource {
   }
 
   @override
-  Future<bool> favoriteCourt(String idCustomer, int idCourt) async {
-    //TODO: implementar
+  Future<void> favoriteCourt(String idCustomer, int idCourt) async {
     final evaluateFavorite = await supabase
         .from('favorite_courts')
         .select("*")
@@ -31,20 +30,17 @@ class CourtsRemoteDatasourceImpl implements CourtsRemoteDatasource {
       await supabase.from('favorite_courts').insert([
         {'customer_id': idCustomer, 'court_id': idCourt},
       ]).select();
-      return true;
     } else {
       await supabase
           .from('favorite_courts')
           .delete()
           .eq('customer_id', idCustomer)
           .eq('court_id', idCourt);
-      return false;
     }
   }
 
   @override
   Future<List<FavoriteCourtsModel>> getFavoriteCourts(String idCustomer) async {
-    //TODO: implementar en vista
     final response = await supabase
         .from('favorite_courts')
         .select("*,courts(*)")

@@ -11,7 +11,7 @@ class CourtsUsecase {
     return repository.getCourts();
   }
 
-  Future<bool> favoriteCourt(String idCustomer, int idCourt) {
+  Future<void> favoriteCourt(String idCustomer, int idCourt) {
     return repository.favoriteCourt(idCustomer, idCourt);
   }
 

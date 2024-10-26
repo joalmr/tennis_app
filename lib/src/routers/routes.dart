@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tennis_app/src/app/tennis/presentation/pages/home/home_page_nav.dart';
+import 'package:tennis_app/src/app/tennis/presentation/pages/reservation/reservation_check_page.dart';
 import 'package:tennis_app/src/app/tennis/presentation/pages/reservation/reservation_page.dart';
 import 'package:tennis_app/src/app/user/presentation/pages/login/login_page.dart';
 import 'package:tennis_app/src/app/user/presentation/pages/register/register_page.dart';
@@ -42,6 +43,13 @@ final GoRouter goRoute = GoRouter(
       builder: (context, state) {
         var id = state.pathParameters['id'];
         return ReservationPage(id: int.parse(id!));
+      },
+    ),
+    GoRoute(
+      path: '/reservationcheck/:idReservation',
+      builder: (context, state) {
+        var id = state.pathParameters['idReservation'];
+        return ReservationCheckPage(idReservation: int.parse(id!));
       },
     ),
   ],

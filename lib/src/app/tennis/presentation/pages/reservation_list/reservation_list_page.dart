@@ -76,6 +76,7 @@ class _ReservationListPageState extends State<ReservationListPage> {
                             );
                           },
                           child: MyReservasWidget(
+                            idReservation: item.id!,
                             courtImg: item.courts!.image!,
                             courtTitle: item.courts!.name!,
                             courtSurface: item.courts!.surfaceType!,
@@ -87,6 +88,7 @@ class _ReservationListPageState extends State<ReservationListPage> {
                             timeStart: item.startTime!,
                             hours: item.timePlay.toString(),
                             price: item.totalPrice.toString(),
+                            instructor: item.instructors!.name!,
                           ),
                         ),
                     ],

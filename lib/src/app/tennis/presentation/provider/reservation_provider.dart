@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:tennis_app/src/app/tennis/domain/entities/courts_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/entities/reservation_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/reservation_usecase.dart';
@@ -20,6 +21,7 @@ class ReservationProvider extends ChangeNotifier {
 
   List<ReservationEntity> reservations = [];
   List<ReservationEntity> myReservations = [];
+  ReservationEntity? reservation;
   ReservationEntity? createdReservation;
 
   createReservation(String comment) async {
@@ -42,6 +44,13 @@ class ReservationProvider extends ChangeNotifier {
     reservations = await reservationUsecase.getReservations();
     myReservations =
         reservations.where((x) => x.customerId == MyStorage().uid).toList();
+    notifyListeners();
+  }
+
+  getReservationById(int id) async {
+    reservations = await reservationUsecase.getReservations();
+    reservation = reservations.firstWhere((x) => x.id == id);
+    Logger().d(reservation);
     notifyListeners();
   }
 

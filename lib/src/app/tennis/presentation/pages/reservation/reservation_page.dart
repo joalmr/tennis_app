@@ -46,7 +46,7 @@ class _ReservationPageState extends State<ReservationPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ReservationProvider>();
-    final providerCourt = context.read<CourtsProvider>();
+    final providerCourt = context.watch<CourtsProvider>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -82,11 +82,15 @@ class _ReservationPageState extends State<ReservationPage> {
                   right: 32,
                   child: IconButton(
                     onPressed: () {
-                      //TODO: Agregar a favoritos
+                      providerCourt.putFavorite(widget.id);
                     },
-                    icon: const Icon(
-                      Icons.favorite_border,
-                      color: Colors.white,
+                    icon: Icon(
+                      providerCourt.isFavorite(widget.id)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: providerCourt.isFavorite(widget.id)
+                          ? kPrimaryColor
+                          : Colors.white,
                       size: 32,
                     ),
                   ),
@@ -169,19 +173,18 @@ class _ReservationPageState extends State<ReservationPage> {
                               ),
                             ],
                           ),
-                          //! consumir servicio weather
                         ],
                       ),
                     ),
-                    const Row(
+                    Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.location_on_outlined,
                           color: Colors.black54,
                           size: 20,
                         ),
-                        SizedBox(width: 2),
-                        Text('Lima'),
+                        const SizedBox(width: 2),
+                        Text(providerCourt.court?.location ?? ''),
                       ],
                     ),
                     const Padding(

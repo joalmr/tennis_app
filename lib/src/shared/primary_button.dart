@@ -9,7 +9,7 @@ class KPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       style: const ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(kPrimaryColor),
           foregroundColor: WidgetStatePropertyAll(kTextColorContrast),

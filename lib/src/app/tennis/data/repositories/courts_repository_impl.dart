@@ -14,7 +14,7 @@ class CourtsRepositoryImpl implements CourtsRepository {
   }
 
   @override
-  Future<bool> favoriteCourt(String idCustomer, int idCourt) async {
+  Future<void> favoriteCourt(String idCustomer, int idCourt) async {
     return await remoteDatasource.favoriteCourt(idCustomer, idCourt);
   }
 
