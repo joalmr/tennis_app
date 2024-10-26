@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_app/src/styles/colors.dart';
 
 class ReservasWidget extends StatelessWidget {
   const ReservasWidget(
@@ -21,7 +22,7 @@ class ReservasWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 2),
       child: Container(
-          color: const Color(0xFFF4F7FC),
+          color: kSkyBlue,
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 16,
@@ -38,7 +39,7 @@ class ReservasWidget extends StatelessWidget {
                   ),
                   height: 60,
                   child: Image(
-                    image: AssetImage("assets/images/$canchaImg.png"),
+                    image: AssetImage("assets/images/$canchaImg"),
                     fit: BoxFit.fill,
                   ),
                 ),

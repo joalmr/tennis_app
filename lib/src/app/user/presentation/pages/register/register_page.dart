@@ -70,7 +70,7 @@ class RegisterPage extends StatelessWidget {
                 thickness: 1,
                 indent: 32,
                 endIndent: MediaQuery.of(context).size.width * 0.7,
-                color: const Color(0xFF346BC3),
+                color: kBlue,
                 height: 8,
               ),
               const SizedBox(height: 24),
@@ -87,7 +87,7 @@ class RegisterPage extends StatelessWidget {
                   },
                   decoration: const InputDecoration(
                     labelText: "Nombre y apellido",
-                    labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: TextStyle(color: kGrey),
                     prefix: Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -116,7 +116,7 @@ class RegisterPage extends StatelessWidget {
                   },
                   decoration: const InputDecoration(
                     labelText: "Email",
-                    labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: TextStyle(color: kGrey),
                     prefix: Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -149,7 +149,7 @@ class RegisterPage extends StatelessWidget {
                   },
                   decoration: const InputDecoration(
                     labelText: "Teléfono",
-                    labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: TextStyle(color: kGrey),
                     prefix: Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -182,7 +182,7 @@ class RegisterPage extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     labelText: "Contraseña",
-                    labelStyle: const TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: const TextStyle(color: kGrey),
                     prefix: const Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -223,7 +223,7 @@ class RegisterPage extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     labelText: "Confirmar contraseña",
-                    labelStyle: const TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: const TextStyle(color: kGrey),
                     prefix: const Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -288,7 +288,7 @@ class RegisterPage extends StatelessWidget {
                         TextSpan(
                           text: "Iniciar sesión",
                           style: const TextStyle(
-                            color: Color(0xFF346BC3),
+                            color: kBlue,
                             fontSize: 16,
                           ),
                           recognizer: TapGestureRecognizer()

@@ -4,7 +4,7 @@ import 'package:tennis_app/src/app/tennis/domain/repositories/courts_repository.
 class CourtsUsecase {
   final CourtsRepository repository;
 
-  CourtsUsecase(this.repository);
+  CourtsUsecase({required this.repository});
 
   Future<List<CourtsEntity>> getCourts() async {
     return repository.getCourts();

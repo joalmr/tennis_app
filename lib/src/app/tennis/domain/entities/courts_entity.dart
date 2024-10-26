@@ -8,9 +8,11 @@ class CourtsEntity extends Equatable {
   final String? image;
   final int? price;
   final int? start;
+  final String? startString;
   final int? end;
+  final String? endString;
 
-  const CourtsEntity(
+  const CourtsEntity({
     this.id,
     this.name,
     this.location,
@@ -18,8 +20,10 @@ class CourtsEntity extends Equatable {
     this.image,
     this.price,
     this.start,
+    this.startString,
     this.end,
-  );
+    this.endString,
+  });
 
   @override
   List<Object?> get props => [
@@ -30,6 +34,8 @@ class CourtsEntity extends Equatable {
         image,
         price,
         start,
+        startString,
         end,
+        endString,
       ];
 }

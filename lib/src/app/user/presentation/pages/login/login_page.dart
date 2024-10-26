@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                 thickness: 1,
                 indent: 32,
                 endIndent: MediaQuery.of(context).size.width * 0.7,
-                color: const Color(0xFF346BC3),
+                color: kBlue,
                 height: 8,
               ),
               const SizedBox(height: 24),
@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                   },
                   decoration: const InputDecoration(
                     labelText: "Email",
-                    labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: TextStyle(color: kGrey),
                     prefix: Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -112,7 +112,7 @@ class LoginPage extends StatelessWidget {
                   },
                   decoration: const InputDecoration(
                     labelText: "Contraseña",
-                    labelStyle: TextStyle(color: Color(0xFF9B9C9D)),
+                    labelStyle: TextStyle(color: kGrey),
                     prefix: Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Image(
@@ -157,7 +157,7 @@ class LoginPage extends StatelessWidget {
                 child: Text(
                   "¿Olvidaste tu contraseña?",
                   style: TextStyle(
-                    color: Color(0xFF346BC3),
+                    color: kBlue,
                     fontSize: 16,
                   ),
                 ),
@@ -177,7 +177,7 @@ class LoginPage extends StatelessWidget {
                         );
 
                         if (provider.loginUser) {
-                          //TODO: guardar datos si el casillero de recordar contraseña esta activado
+                          //TODO: guardar datos en storage si el casillero de recordar contraseña esta activado
                           if (!context.mounted) return;
                           context.go('/home');
                         }
@@ -198,7 +198,7 @@ class LoginPage extends StatelessWidget {
                         TextSpan(
                           text: "Regístrate",
                           style: const TextStyle(
-                            color: Color(0xFF346BC3),
+                            color: kBlue,
                             fontSize: 16,
                           ),
                           recognizer: TapGestureRecognizer()

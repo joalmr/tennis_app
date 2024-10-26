@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/reservation_provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/widgets/home/canchas_widget.dart';
 import 'package:tennis_app/src/app/tennis/presentation/widgets/home/reservas_widget.dart';
 import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
+import 'package:tennis_app/src/shared/date_format.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,6 +15,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final providerAuth = context.read<AuthProvider>();
+    final provider = context.watch<CourtsProvider>();
+    final providerReservation = context.watch<ReservationProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -20,7 +25,10 @@ class HomePage extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[Colors.black, Color(0xFF82BC00)],
+              colors: <Color>[
+                Colors.black,
+                kPrimaryColor,
+              ],
             ),
           ),
         ),
@@ -60,9 +68,10 @@ class HomePage extends StatelessWidget {
                         style: const ButtonStyle(
                           foregroundColor: WidgetStatePropertyAll(Colors.red),
                         ),
-                        onPressed: () async {
+                        onPressed: () {
                           //! Cerrar sesion en supabase
-                          await providerAuth.signOut();
+                          //TODO: corregir
+                          providerAuth.signOut();
                           if (context.mounted) context.go("/");
                         },
                         child: const Text('Cerrar sesión'),
@@ -103,7 +112,8 @@ class HomePage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 12),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             width: MediaQuery.of(context).size.width,
-            child: Text("Hola Alonso!",
+            child: Text(
+                "Hola Alonso!", //TODO: Cambiar por el nombre del usuario traido de storage
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                     )),
@@ -116,35 +126,32 @@ class HomePage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const SingleChildScrollView(
+          SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-              child: Row(
-                children: [
-                  CanchasWidget(
-                    canchaImg: "epic_tennis",
-                    canchaTitle: "Epic Box",
-                    canchaSubtitle: "Cancha tipo A",
-                    fecha: "20 de Octubre 2024",
-                    disponible: "7:00 am a 4:00 pm",
-                  ),
-                  CanchasWidget(
-                    canchaImg: "rusty_tennis",
-                    canchaTitle: "Rusty Tennis",
-                    canchaSubtitle: "Cancha tipo C",
-                    fecha: "21 de Octubre 2024",
-                    disponible: "7:00 am a 4:00 pm",
-                  ),
-                  CanchasWidget(
-                    canchaImg: "multiple_tennis",
-                    canchaTitle: "Cancha Multiple",
-                    canchaSubtitle: "Cancha tipo B",
-                    fecha: "22 de Octubre 2024",
-                    disponible: "7:00 am a 4:00 pm",
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: provider.courts.isEmpty
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        for (var item in provider.courts)
+                          CanchasWidget(
+                            id: item.id!,
+                            canchaImg: item.image!,
+                            canchaTitle: item.name!,
+                            canchaSubtitle: item.surfaceType!,
+                            fecha: DateTime.now(),
+                            startTime: item.startString!,
+                            endTime: item.endString!,
+                          ),
+                      ],
+                    ),
             ),
           ),
           const SizedBox(height: 20),
@@ -156,24 +163,17 @@ class HomePage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const Column(
+          Column(
             children: [
-              ReservasWidget(
-                canchaImg: "rusty_tennis",
-                canchaTitle: "Rusty Tennis",
-                personReserved: "Alonso Massa",
-                date: "21 de Octubre 2024",
-                hours: "2",
-                price: "50",
-              ),
-              ReservasWidget(
-                canchaImg: "rusty_tennis",
-                canchaTitle: "Rusty Tennis",
-                personReserved: "Alonso Massa",
-                date: "24 de Octubre 2024",
-                hours: "2",
-                price: "50",
-              ),
+              for (var item in providerReservation.reservations)
+                ReservasWidget(
+                  canchaImg: item.courts!.image!,
+                  canchaTitle: item.courts!.name!,
+                  personReserved: item.customers!.name!,
+                  date: formattedDate(DateTime.parse(item.reservationDate!)),
+                  hours: item.timePlay.toString(),
+                  price: item.totalPrice.toString(),
+                ),
             ],
           ),
         ],

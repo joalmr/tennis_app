@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:tennis_app/src/app/user/domain/usecases/auth_usecase.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthUsecase authUsecase;
-  AuthProvider(this.authUsecase);
+  AuthProvider({required this.authUsecase});
 
   bool registerUser = false;
   bool loginUser = false;
@@ -17,7 +16,6 @@ class AuthProvider extends ChangeNotifier {
 
     if (response != null) {
       registerUser = true;
-      Logger().i(response.user?.id);
     }
     notifyListeners();
   }
@@ -27,7 +25,6 @@ class AuthProvider extends ChangeNotifier {
 
     if (response?.session?.accessToken != null) {
       loginUser = true;
-      Logger().i(response?.user?.id);
     }
     notifyListeners();
   }

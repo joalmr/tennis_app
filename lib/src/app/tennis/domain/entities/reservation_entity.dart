@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/courts_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/customers_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/instructors_entity.dart';
 
 class ReservationEntity extends Equatable {
   final int? id;
@@ -9,17 +12,14 @@ class ReservationEntity extends Equatable {
   final String? comment;
   final int? startTime;
   final int? endTime; //!
-  final String? court;
-  final String? surfaceType;
-  final String? image;
-  final String? location;
-  final int? price;
-  final String? customer;
-  final String? instructor;
+  // final String? courts;
+  final CourtsEntity? courts;
+  final CustomersEntity? customers;
+  final InstructorsEntity? instructors;
   final int? timePlay;
   final int? totalPrice;
 
-  const ReservationEntity(
+  const ReservationEntity({
     this.id,
     this.customerId,
     this.courtId,
@@ -28,16 +28,12 @@ class ReservationEntity extends Equatable {
     this.comment,
     this.startTime,
     this.endTime, //!
-    this.court,
-    this.surfaceType,
-    this.image,
-    this.location,
-    this.price,
-    this.customer,
-    this.instructor,
+    this.courts,
+    this.customers,
+    this.instructors,
     this.timePlay,
     this.totalPrice,
-  );
+  });
 
   @override
   List<Object?> get props => [
@@ -49,13 +45,9 @@ class ReservationEntity extends Equatable {
         comment,
         startTime,
         endTime, //!
-        court,
-        surfaceType,
-        image,
-        location,
-        price,
-        customer,
-        instructor,
+        courts,
+        customers,
+        instructors,
         timePlay,
         totalPrice,
       ];

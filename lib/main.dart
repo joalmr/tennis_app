@@ -4,6 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tennis_app/di.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/instructors_provider.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/reservation_provider.dart';
 import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
 import 'package:tennis_app/src/routers/routes.dart';
 import 'package:tennis_app/src/styles/theme.dart';
@@ -27,8 +30,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => GetIt.instance.get<AuthProvider>(),
-        ),
+            create: (_) => GetIt.instance.get<AuthProvider>()),
+        ChangeNotifierProvider(
+            create: (_) => GetIt.instance.get<CourtsProvider>()),
+        ChangeNotifierProvider(
+            create: (_) => GetIt.instance.get<InstructorsProvider>()),
+        ChangeNotifierProvider(
+            create: (_) => GetIt.instance.get<ReservationProvider>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

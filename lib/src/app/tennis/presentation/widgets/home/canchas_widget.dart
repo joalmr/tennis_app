@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tennis_app/src/shared/date_format.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class CanchasWidget extends StatelessWidget {
   const CanchasWidget({
     super.key,
+    required this.id,
     required this.canchaImg,
     required this.canchaTitle,
     required this.canchaSubtitle,
-    required this.disponible,
+    required this.startTime,
+    required this.endTime,
     required this.fecha,
   });
+  final int id;
   final String canchaImg;
   final String canchaTitle;
   final String canchaSubtitle;
-  final String disponible;
-  final String fecha;
+  final String startTime;
+  final String endTime;
+  final DateTime fecha;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8, right: 20),
       child: Container(
-        width: 300,
+        width: 280,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.black12),
@@ -30,7 +36,7 @@ class CanchasWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-              image: AssetImage("assets/images/$canchaImg.png"),
+              image: AssetImage("assets/images/$canchaImg"),
               height: 200,
               fit: BoxFit.fill,
             ),
@@ -39,9 +45,16 @@ class CanchasWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    canchaTitle,
-                    style: Theme.of(context).textTheme.titleLarge,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        canchaTitle,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const Text('30°'),
+                      //TODO: cambiar por los grados consumidos del servicio weatherapi
+                    ],
                   ),
                   Text(
                     canchaSubtitle,
@@ -58,7 +71,7 @@ class CanchasWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          fecha,
+                          formattedDate(fecha),
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
@@ -77,7 +90,7 @@ class CanchasWidget extends StatelessWidget {
                           height: 8,
                           width: 8,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF346BC3),
+                            color: kBlue,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -88,7 +101,7 @@ class CanchasWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          disponible,
+                          "$startTime a $endTime",
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
@@ -121,7 +134,9 @@ class CanchasWidget extends StatelessWidget {
                             vertical: 6,
                           )),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push('/reservation/$id');
+                        },
                         child: const Text("Reservar"),
                       ),
                     ),
