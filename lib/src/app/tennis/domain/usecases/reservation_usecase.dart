@@ -13,4 +13,8 @@ class ReservationUsecase {
   Future<ReservationEntity?> createReservation(ReservationEntity reservation) {
     return repository.createReservation(reservation);
   }
+
+  Future<void> deleteReservation(int id) {
+    return repository.deleteReservation(id);
+  }
 }

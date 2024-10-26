@@ -25,8 +25,6 @@ class _ReservationPageState extends State<ReservationPage> {
   final controllerDate = TextEditingController();
   final controllerComment = TextEditingController();
 
-  // ValueNotifier<ForecastEntity?> weatherForecastEntity = ValueNotifier(null);
-
   @override
   void initState() {
     super.initState();
@@ -84,7 +82,9 @@ class _ReservationPageState extends State<ReservationPage> {
                   top: MediaQuery.of(context).size.height * 0.0325,
                   right: 32,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO: Agregar a favoritos
+                    },
                     icon: const Icon(
                       Icons.favorite_border,
                       color: Colors.white,
@@ -170,7 +170,7 @@ class _ReservationPageState extends State<ReservationPage> {
                               ),
                             ],
                           ),
-                          //TODO: consumir servicio weather
+                          //! consumir servicio weather
                         ],
                       ),
                     ),

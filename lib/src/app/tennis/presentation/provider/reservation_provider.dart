@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:tennis_app/src/app/tennis/domain/entities/courts_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/entities/reservation_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/reservation_usecase.dart';
@@ -41,14 +40,15 @@ class ReservationProvider extends ChangeNotifier {
 
   getReservations() async {
     reservations = await reservationUsecase.getReservations();
-    Logger().w(reservations.length, error: 'reservations');
+    myReservations =
+        reservations.where((x) => x.customerId == MyStorage().uid).toList();
+
     notifyListeners();
   }
 
-  getMyReservations() async {
-    myReservations =
-        reservations.where((x) => x.customerId == MyStorage().uid).toList();
-    Logger().w(myReservations.length, error: 'my reservations');
+  deleteReservation(int id) async {
+    await reservationUsecase.deleteReservation(id);
+    getReservations();
     notifyListeners();
   }
 }

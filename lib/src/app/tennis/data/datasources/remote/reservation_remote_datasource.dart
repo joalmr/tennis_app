@@ -5,6 +5,7 @@ import 'package:tennis_app/src/app/tennis/domain/entities/reservation_entity.dar
 abstract class ReservationRemoteDatasource {
   Future<List<ReservationModel>> getReservations();
   Future<ReservationModel?> createReservation(ReservationEntity reservation);
+  Future<void> deleteReservation(int id);
 }
 
 class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
@@ -21,7 +22,7 @@ class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
 
     if (evaluateReservation.length >= 3) {
       return null;
-      //TODO: mandar mensaje de error personalizado
+      //! mandar mensaje de error personalizado
     } else {
       final response = await supabase.from('reservations').insert([
         {
@@ -63,5 +64,10 @@ class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
         response.map((json) => ReservationModel.fromJson(json)).toList();
 
     return reservations;
+  }
+
+  @override
+  Future<void> deleteReservation(int id) async {
+    await supabase.from('reservations').delete().eq('id', id);
   }
 }

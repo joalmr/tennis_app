@@ -17,4 +17,9 @@ class ReservationRepositoryImpl implements ReservationRepository {
   Future<List<ReservationEntity>> getReservations() async {
     return await remoteDatasource.getReservations();
   }
+
+  @override
+  Future<void> deleteReservation(int id) async {
+    return await remoteDatasource.deleteReservation(id);
+  }
 }

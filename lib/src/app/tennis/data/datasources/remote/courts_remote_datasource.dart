@@ -14,6 +14,4 @@ class CourtsRemoteDatasourceImpl implements CourtsRemoteDatasource {
 
     return response.map((json) => CourtsModel.fromJson(json)).toList();
   }
-
-  // final response = await supabase.from('courts').select('*').eq('id', 1);
 }

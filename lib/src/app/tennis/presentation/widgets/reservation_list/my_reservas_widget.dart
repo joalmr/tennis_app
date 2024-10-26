@@ -1,63 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
-import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
-import 'package:tennis_app/src/styles/colors.dart';
 
-class ReservasWidget extends StatefulWidget {
-  const ReservasWidget({
+class MyReservasWidget extends StatelessWidget {
+  const MyReservasWidget({
     super.key,
-    required this.canchaImg,
-    required this.canchaTitle,
+    required this.courtImg,
+    required this.courtTitle,
     required this.personReserved,
     required this.date,
     required this.hours,
     required this.price,
-    required this.dt,
-    required this.timeStart,
-    required this.timeEnd,
-    required this.location,
+    required this.courtSurface,
   });
-  final String canchaImg;
-  final String canchaTitle;
+  final String courtImg;
+  final String courtTitle;
   final String personReserved;
   final String date;
   final String hours;
   final String price;
-  final String dt;
-  final int timeStart;
-  final int timeEnd;
-  final String location;
-
-  @override
-  State<ReservasWidget> createState() => _ReservasWidgetState();
-}
-
-class _ReservasWidgetState extends State<ReservasWidget> {
-  ValueNotifier<WeatherEntity?> weatherEntity = ValueNotifier(null);
-
-  @override
-  initState() {
-    super.initState();
-    getWeather();
-  }
-
-  getWeather() async {
-    final providerCourts = context.read<CourtsProvider>();
-    weatherEntity.value = await providerCourts.getForecastWeather(
-        widget.location, widget.dt, null);
-    setState(() {});
-  }
-
+  final String courtSurface;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 2),
+      padding: const EdgeInsets.only(top: 8, bottom: 2, left: 8, right: 8),
       child: Container(
-          color: kSkyBlue,
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 16,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.white,
+            border: Border.all(color: Colors.black12),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +44,7 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                   ),
                   height: 60,
                   child: Image(
-                    image: AssetImage("assets/images/${widget.canchaImg}"),
+                    image: AssetImage("assets/images/$courtImg"),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -83,31 +56,17 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.canchaTitle,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            children: [
-                              weatherEntity.value?.current == null
-                                  ? const SizedBox()
-                                  : Image.network(
-                                      'http:${weatherEntity.value!.current!.condition!.icon}',
-                                      height: 32,
-                                    ),
-                              weatherEntity.value?.current == null
-                                  ? const SizedBox()
-                                  : Text(weatherEntity.value!.current!.tempC
-                                      .toString()),
-                            ],
-                          ),
-                        ],
+                      Text(
+                        courtTitle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        courtSurface,
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -119,7 +78,7 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            widget.date,
+                            date,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
@@ -143,7 +102,7 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            widget.personReserved,
+                            personReserved,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
@@ -158,7 +117,7 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "${widget.hours} horas",
+                            "$hours horas",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           const VerticalDivider(
@@ -166,7 +125,7 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                             width: 16,
                           ),
                           Text(
-                            "\$ ${widget.price}",
+                            "\$ $price",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
