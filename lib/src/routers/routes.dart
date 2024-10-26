@@ -5,6 +5,7 @@ import 'package:tennis_app/src/app/tennis/presentation/pages/reservation/reserva
 import 'package:tennis_app/src/app/user/presentation/pages/login/login_page.dart';
 import 'package:tennis_app/src/app/user/presentation/pages/register/register_page.dart';
 import 'package:tennis_app/src/app/user/presentation/pages/welcome/welcome_page.dart';
+import 'package:tennis_app/src/shared/storage.data.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -13,8 +14,7 @@ final GoRouter goRoute = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) {
-        //TODO: cambiar por dato de storage
-        return supabase.auth.currentSession != null
+        return MyStorage().uid.isNotEmpty
             ? const HomePage()
             : const WelcomePage();
       },
@@ -22,7 +22,7 @@ final GoRouter goRoute = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) {
-        return LoginPage();
+        return const LoginPage();
       },
     ),
     GoRoute(

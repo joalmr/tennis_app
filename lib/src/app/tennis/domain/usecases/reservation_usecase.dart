@@ -10,7 +10,7 @@ class ReservationUsecase {
     return repository.getReservations();
   }
 
-  Future<ReservationEntity> createReservation(ReservationEntity reservation) {
+  Future<ReservationEntity?> createReservation(ReservationEntity reservation) {
     return repository.createReservation(reservation);
   }
 }

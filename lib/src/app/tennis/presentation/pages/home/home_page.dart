@@ -7,6 +7,7 @@ import 'package:tennis_app/src/app/tennis/presentation/widgets/home/canchas_widg
 import 'package:tennis_app/src/app/tennis/presentation/widgets/home/reservas_widget.dart';
 import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
 import 'package:tennis_app/src/shared/date_format.dart';
+import 'package:tennis_app/src/shared/storage.data.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerAuth = context.read<AuthProvider>();
+    final providerAuth = context.watch<AuthProvider>();
     final provider = context.watch<CourtsProvider>();
     final providerReservation = context.watch<ReservationProvider>();
 
@@ -69,10 +70,9 @@ class HomePage extends StatelessWidget {
                           foregroundColor: WidgetStatePropertyAll(Colors.red),
                         ),
                         onPressed: () {
-                          //! Cerrar sesion en supabase
-                          //TODO: corregir
-                          providerAuth.signOut();
-                          if (context.mounted) context.go("/");
+                          providerAuth
+                              .signOut()
+                              .then((value) => context.go("/login"));
                         },
                         child: const Text('Cerrar sesión'),
                       ),
@@ -112,8 +112,7 @@ class HomePage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 12),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             width: MediaQuery.of(context).size.width,
-            child: Text(
-                "Hola Alonso!", //TODO: Cambiar por el nombre del usuario traido de storage
+            child: Text("Hola ${MyStorage().name}!",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                     )),
@@ -163,19 +162,22 @@ class HomePage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          Column(
-            children: [
-              for (var item in providerReservation.reservations)
-                ReservasWidget(
-                  canchaImg: item.courts!.image!,
-                  canchaTitle: item.courts!.name!,
-                  personReserved: item.customers!.name!,
-                  date: formattedDate(DateTime.parse(item.reservationDate!)),
-                  hours: item.timePlay.toString(),
-                  price: item.totalPrice.toString(),
+          providerReservation.reservations.isEmpty
+              ? const Center(child: Text("No hay reservas programadas"))
+              : Column(
+                  children: [
+                    for (var item in providerReservation.reservations)
+                      ReservasWidget(
+                        canchaImg: item.courts!.image!,
+                        canchaTitle: item.courts!.name!,
+                        personReserved: item.customers!.name!,
+                        date: formattedDate(
+                            DateTime.parse(item.reservationDate!)),
+                        hours: item.timePlay.toString(),
+                        price: item.totalPrice.toString(),
+                      ),
+                  ],
                 ),
-            ],
-          ),
         ],
       ),
     );

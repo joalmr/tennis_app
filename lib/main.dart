@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tennis_app/di.dart';
@@ -14,6 +15,7 @@ import 'package:tennis_app/src/styles/theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await GetStorage.init();
   await Supabase.initialize(
     url: dotenv.env['SUPA_URL']!,
     anonKey: dotenv.env['SUPA_KEY']!,

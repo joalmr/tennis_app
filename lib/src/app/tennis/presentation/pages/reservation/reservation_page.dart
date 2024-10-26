@@ -46,7 +46,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<ReservationProvider>();
+    final provider = context.watch<ReservationProvider>();
     final providerCourt = context.read<CourtsProvider>();
 
     return Scaffold(
@@ -311,6 +311,11 @@ class _ReservationPageState extends State<ReservationPage> {
 
                         await provider
                             .createReservation(controllerComment.text);
+
+                        if (provider.createdReservation != null) {
+                          if (!context.mounted) return;
+                          context.go('/home');
+                        }
                       },
                     ),
                   ),

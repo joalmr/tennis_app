@@ -4,15 +4,30 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
 import 'package:tennis_app/src/shared/primary_button.dart';
+import 'package:tennis_app/src/shared/storage.data.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
 
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (MyStorage().email.isNotEmpty && MyStorage().password.isNotEmpty) {
+      controllerEmail.text = MyStorage().email;
+      controllerPassword.text = MyStorage().password;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +147,9 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
                 child: GestureDetector(
                   onTap: () async {
-                    await provider.rememberMe();
+                    setState(() {
+                      MyStorage().isRemember = !MyStorage().isRemember;
+                    });
                   },
                   child: Row(
                     children: [
@@ -140,7 +157,7 @@ class LoginPage extends StatelessWidget {
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
-                          color: provider.checkRemember
+                          color: MyStorage().isRemember
                               ? kPrimaryColor
                               : Colors.white,
                           borderRadius: BorderRadius.circular(4),
@@ -177,7 +194,13 @@ class LoginPage extends StatelessWidget {
                         );
 
                         if (provider.loginUser) {
-                          //TODO: guardar datos en storage si el casillero de recordar contraseña esta activado
+                          if (MyStorage().isRemember) {
+                            MyStorage().email = controllerEmail.text;
+                            MyStorage().password = controllerPassword.text;
+                          } else {
+                            MyStorage().email = "";
+                            MyStorage().password = "";
+                          }
                           if (!context.mounted) return;
                           context.go('/home');
                         }

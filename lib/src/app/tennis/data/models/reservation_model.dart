@@ -33,12 +33,19 @@ class ReservationModel extends ReservationEntity {
       comment: json['comment'],
       startTime: json['start_time'],
       endTime: json['end_time'], //
-      courts: CourtsModel.fromJson(json['courts']),
-      customers: CustomersModel.fromJson(json["customers"]),
-      instructors: InstructorsModel.fromJson(json["instructors"]),
+      courts: json['courts'] == null
+          ? null
+          : CourtsModel.fromJson(json['courts']), //!
+      customers: json["customers"] == null
+          ? null
+          : CustomersModel.fromJson(json["customers"]),
+      instructors: json["instructors"] == null
+          ? null
+          : InstructorsModel.fromJson(json["instructors"]),
       timePlay: json['end_time'] - json['start_time'],
-      totalPrice:
-          (json['end_time'] - json['start_time']) * json['courts']['price'],
+      totalPrice: json['courts'] == null
+          ? null
+          : (json['end_time'] - json['start_time']) * json['courts']['price'],
     );
   }
 

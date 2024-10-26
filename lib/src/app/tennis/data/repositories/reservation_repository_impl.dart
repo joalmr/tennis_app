@@ -8,7 +8,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
   ReservationRepositoryImpl({required this.remoteDatasource});
 
   @override
-  Future<ReservationEntity> createReservation(
+  Future<ReservationEntity?> createReservation(
       ReservationEntity reservation) async {
     return await remoteDatasource.createReservation(reservation);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_app/src/app/user/domain/usecases/auth_usecase.dart';
+import 'package:tennis_app/src/shared/storage.data.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthUsecase authUsecase;
@@ -7,7 +8,7 @@ class AuthProvider extends ChangeNotifier {
 
   bool registerUser = false;
   bool loginUser = false;
-  bool checkRemember = false;
+  // bool checkRemember = false;
   bool togglePasswordVisibility = true;
   bool togglePasswordVisibilityRepeat = true;
 
@@ -16,6 +17,9 @@ class AuthProvider extends ChangeNotifier {
 
     if (response != null) {
       registerUser = true;
+      MyStorage().uid = response.user!.id;
+      MyStorage().name =
+          response.user!.userMetadata!['full_name'].toString().split(' ')[0];
     }
     notifyListeners();
   }
@@ -23,20 +27,19 @@ class AuthProvider extends ChangeNotifier {
   signIn(String email, String password) async {
     final response = await authUsecase.signIn(email, password);
 
-    if (response?.session?.accessToken != null) {
+    if (response != null) {
       loginUser = true;
+      MyStorage().uid = response.user!.id;
+      MyStorage().name =
+          response.user!.userMetadata!['full_name'].toString().split(' ')[0];
     }
     notifyListeners();
   }
 
   signOut() async {
     await authUsecase.signOut();
-    notifyListeners();
-  }
-
-  rememberMe() {
-    checkRemember = !checkRemember;
-    notifyListeners();
+    MyStorage().uid = '';
+    MyStorage().name = '';
   }
 
   togglePassword() {
