@@ -25,6 +25,8 @@ class _ReservationPageState extends State<ReservationPage> {
   final controllerDate = TextEditingController();
   final controllerComment = TextEditingController();
 
+  // ValueNotifier<ForecastEntity?> weatherForecastEntity = ValueNotifier(null);
+
   @override
   void initState() {
     super.initState();
@@ -139,30 +141,36 @@ class _ReservationPageState extends State<ReservationPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Disponible",
-                            style: Theme.of(context).textTheme.titleSmall,
+                          Row(
+                            children: [
+                              Text(
+                                "Disponible",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              const SizedBox(width: 4),
+                              Container(
+                                height: 8,
+                                width: 8,
+                                decoration: BoxDecoration(
+                                  color: kBlue,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.calendar_month_outlined,
+                                color: Colors.black54,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "${providerCourt.court?.startString} a ${providerCourt.court?.endString}",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 4),
-                          Container(
-                            height: 8,
-                            width: 8,
-                            decoration: BoxDecoration(
-                              color: kBlue,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                          const Icon(
-                            Icons.calendar_month_outlined,
-                            color: Colors.black54,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            "${providerCourt.court?.startString} a ${providerCourt.court?.endString}",
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
+                          //TODO: consumir servicio weather
                         ],
                       ),
                     ),
@@ -312,7 +320,15 @@ class _ReservationPageState extends State<ReservationPage> {
                         await provider
                             .createReservation(controllerComment.text);
 
-                        if (provider.createdReservation != null) {
+                        if (provider.createdReservation == null) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: kRed,
+                            content: Text('No se realizó la reserva'),
+                          ));
+                          return;
+                        } else {
                           if (!context.mounted) return;
                           context.go('/home');
                         }

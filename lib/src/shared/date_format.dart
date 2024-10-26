@@ -4,6 +4,10 @@ DateFormat f() {
   return DateFormat('dd/MM/yyyy');
 }
 
+DateFormat fClasic() {
+  return DateFormat('yyyy-MM-dd');
+}
+
 String formattedDate(DateTime date) {
   final months = [
     'Enero',

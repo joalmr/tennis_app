@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_app/src/app/tennis/domain/entities/courts_entity.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/courts_usecase.dart';
+import 'package:tennis_app/src/app/tennis/domain/usecases/weather_usecase.dart';
 
 class CourtsProvider extends ChangeNotifier {
   final CourtsUsecase courtsUsecase;
+  final WeatherUsecase weatherUsecase;
 
-  CourtsProvider({required this.courtsUsecase}) {
+  CourtsProvider({
+    required this.courtsUsecase,
+    required this.weatherUsecase,
+  }) {
     getCourts();
   }
 
   List<CourtsEntity> courts = [];
   CourtsEntity? court;
   List<DdlTime> listTime = [];
+
+  Future<WeatherEntity> getForecastWeather(
+      String location, String date, int? hour) async {
+    return await weatherUsecase.getForecastWeather(location, date, hour);
+  }
 
   getCourts() async {
     courts = await courtsUsecase.getCourts();

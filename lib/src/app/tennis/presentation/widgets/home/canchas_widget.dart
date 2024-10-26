@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_app/src/app/tennis/domain/entities/weather/weather_entity.dart';
+import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 import 'package:tennis_app/src/shared/date_format.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
-class CanchasWidget extends StatelessWidget {
+class CanchasWidget extends StatefulWidget {
   const CanchasWidget({
     super.key,
     required this.id,
@@ -13,6 +16,7 @@ class CanchasWidget extends StatelessWidget {
     required this.startTime,
     required this.endTime,
     required this.fecha,
+    required this.location,
   });
   final int id;
   final String canchaImg;
@@ -21,6 +25,28 @@ class CanchasWidget extends StatelessWidget {
   final String startTime;
   final String endTime;
   final DateTime fecha;
+  final String location;
+
+  @override
+  State<CanchasWidget> createState() => _CanchasWidgetState();
+}
+
+class _CanchasWidgetState extends State<CanchasWidget> {
+  ValueNotifier<WeatherEntity?> weatherEntity = ValueNotifier(null);
+
+  @override
+  initState() {
+    getWeather(widget.location);
+    super.initState();
+  }
+
+  getWeather(String location) async {
+    final providerCourts = context.read<CourtsProvider>();
+    weatherEntity.value = await providerCourts.getForecastWeather(
+        location, DateTime.now().toIso8601String().split('T')[0], null);
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +62,7 @@ class CanchasWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-              image: AssetImage("assets/images/$canchaImg"),
+              image: AssetImage("assets/images/${widget.canchaImg}"),
               height: 200,
               fit: BoxFit.fill,
             ),
@@ -49,15 +75,25 @@ class CanchasWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        canchaTitle,
+                        widget.canchaTitle,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      const Text('30°'),
-                      //TODO: cambiar por los grados consumidos del servicio weatherapi
+                      Row(children: [
+                        weatherEntity.value?.current == null
+                            ? const SizedBox()
+                            : Image.network(
+                                'http:${weatherEntity.value!.current!.condition!.icon}',
+                                height: 32,
+                              ),
+                        weatherEntity.value?.current == null
+                            ? const SizedBox()
+                            : Text(
+                                weatherEntity.value!.current!.tempC.toString()),
+                      ]),
                     ],
                   ),
                   Text(
-                    canchaSubtitle,
+                    widget.canchaSubtitle,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Padding(
@@ -71,7 +107,7 @@ class CanchasWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          formattedDate(fecha),
+                          formattedDate(widget.fecha),
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
@@ -101,7 +137,7 @@ class CanchasWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          "$startTime a $endTime",
+                          "${widget.startTime} a ${widget.endTime}",
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
@@ -135,7 +171,7 @@ class CanchasWidget extends StatelessWidget {
                           )),
                         ),
                         onPressed: () {
-                          context.push('/reservation/$id');
+                          context.push('/reservation/${widget.id}');
                         },
                         child: const Text("Reservar"),
                       ),

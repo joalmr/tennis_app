@@ -148,6 +148,7 @@ class HomePage extends StatelessWidget {
                             fecha: DateTime.now(),
                             startTime: item.startString!,
                             endTime: item.endString!,
+                            location: item.location!,
                           ),
                       ],
                     ),

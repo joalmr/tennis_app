@@ -2,15 +2,19 @@ import 'package:get_it/get_it.dart';
 import 'package:tennis_app/src/app/tennis/data/datasources/remote/courts_remote_datasource.dart';
 import 'package:tennis_app/src/app/tennis/data/datasources/remote/instructors_remote_datasource.dart';
 import 'package:tennis_app/src/app/tennis/data/datasources/remote/reservation_remote_datasource.dart';
+import 'package:tennis_app/src/app/tennis/data/datasources/remote/weather_remote_datasource.dart';
 import 'package:tennis_app/src/app/tennis/data/repositories/courts_repository_impl.dart';
 import 'package:tennis_app/src/app/tennis/data/repositories/instructors_repository_impl.dart';
 import 'package:tennis_app/src/app/tennis/data/repositories/reservation_repository_impl.dart';
+import 'package:tennis_app/src/app/tennis/data/repositories/weather_repository_impl.dart';
 import 'package:tennis_app/src/app/tennis/domain/repositories/courts_repository.dart';
 import 'package:tennis_app/src/app/tennis/domain/repositories/instructors_repository.dart';
 import 'package:tennis_app/src/app/tennis/domain/repositories/reservation_repository.dart';
+import 'package:tennis_app/src/app/tennis/domain/repositories/weather_repository.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/courts_usecase.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/instructors_usecase.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/reservation_usecase.dart';
+import 'package:tennis_app/src/app/tennis/domain/usecases/weather_usecase.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/instructors_provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/reservation_provider.dart';
@@ -32,7 +36,8 @@ Future<void> init() async {
       () => AuthRemoteDatasourceImpl()); //datasource
 
   //Courts
-  di.registerFactory(() => CourtsProvider(courtsUsecase: di())); //provider
+  di.registerFactory(() =>
+      CourtsProvider(courtsUsecase: di(), weatherUsecase: di())); //provider
   di.registerLazySingleton(() => CourtsUsecase(repository: di())); //usecase
   di.registerLazySingleton<CourtsRepository>(
       () => CourtsRepositoryImpl(remoteDatasource: di())); //repository
@@ -58,4 +63,11 @@ Future<void> init() async {
       () => ReservationRepositoryImpl(remoteDatasource: di())); //repository
   di.registerLazySingleton<ReservationRemoteDatasource>(
       () => ReservationRemoteDatasourceImpl()); //datasource
+
+  //Weather
+  di.registerLazySingleton(() => WeatherUsecase(repository: di())); //usecase
+  di.registerLazySingleton<WeatherRepository>(
+      () => WeatherRepositoryImpl(remoteDatasource: di())); //repository
+  di.registerLazySingleton<WeatherRemoteDatasource>(
+      () => WeatherRemoteDatasourceImpl()); //datasource
 }
