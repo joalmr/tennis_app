@@ -256,21 +256,28 @@ class RegisterPage extends StatelessWidget {
                   textButton: "Registrarme",
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      //! sign up con provider
-                      if (controllerPassword.text ==
-                          controllerPasswordRepeat.text) {
-                        await provider.signUp(
-                          controllerEmail.text,
-                          controllerPassword.text,
-                          controllerFullName.text,
-                          controllerPhone.text,
-                        );
-
-                        if (provider.registerUser) {
+                      //! sign up
+                      provider
+                          .signUp(
+                              controllerEmail.text,
+                              controllerPassword.text,
+                              controllerPasswordRepeat.text,
+                              controllerFullName.text,
+                              controllerPhone.text)
+                          .then((value) {
+                        if (value['status'] == 'error') {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(value['message']),
+                              backgroundColor: kRed,
+                            ),
+                          );
+                        } else {
                           if (!context.mounted) return;
                           context.go('/home');
                         }
-                      }
+                      });
                     }
                   },
                 ),

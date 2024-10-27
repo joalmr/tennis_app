@@ -30,7 +30,7 @@ class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
     } else {
       return {
         'status': 'success',
-        'message': 'Reserva exitosa',
+        'message': 'Reserva correcta',
       };
     }
   }

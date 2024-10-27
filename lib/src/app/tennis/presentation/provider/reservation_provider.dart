@@ -35,9 +35,13 @@ class ReservationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> evaluateReservation() async {
-    final response = await reservationUsecase.evaluateReservation(
-        court!.id!, date!.toIso8601String());
+  evaluatingReservation() =>
+      evaluateReservation(court!.id!, date!.toIso8601String());
+
+  Future<Map<String, dynamic>> evaluateReservation(
+      int courtId, String reservationDate) async {
+    final response =
+        await reservationUsecase.evaluateReservation(courtId, reservationDate);
     Logger().d(response);
     return response;
   }

@@ -14,7 +14,6 @@ class CourtsProvider extends ChangeNotifier {
     required this.weatherUsecase,
   }) {
     getCourts();
-    // getFavoriteCourts();
   }
 
   List<CourtsEntity> courts = [];
@@ -48,25 +47,6 @@ class CourtsProvider extends ChangeNotifier {
         )
     ];
   }
-
-  // putFavorite(int idCourt) async {
-  //   await courtsUsecase.favoriteCourt(MyStorage().uid, idCourt);
-  //   getFavoriteCourts();
-  //   notifyListeners();
-  // }
-
-  // getFavoriteCourts() async {
-  //   favoriteCourts = await courtsUsecase.getFavoriteCourts(MyStorage().uid);
-  //   notifyListeners();
-  // }
-
-  // bool isFavorite(int idCourt) {
-  //   return favoriteCourts
-  //           .where((element) => element.courts!.id == idCourt)
-  //           .isNotEmpty
-  //       ? true
-  //       : false;
-  // }
 }
 
 class DdlTime {

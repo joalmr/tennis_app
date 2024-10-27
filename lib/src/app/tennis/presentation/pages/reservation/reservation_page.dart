@@ -627,7 +627,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                 return;
                               }
 
-                              provider.evaluateReservation().then((value) {
+                              provider.evaluatingReservation().then((value) {
                                 if (value['status'] == 'error') {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(

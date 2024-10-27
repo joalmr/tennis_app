@@ -187,23 +187,23 @@ class _LoginPageState extends State<LoginPage> {
                     textButton: "Iniciar sesión",
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        //! sign in con provider
-                        await provider.signIn(
-                          controllerEmail.text,
-                          controllerPassword.text,
-                        );
-
-                        if (provider.loginUser) {
-                          if (MyStorage().isRemember) {
-                            MyStorage().email = controllerEmail.text;
-                            MyStorage().password = controllerPassword.text;
-                          } else {
-                            MyStorage().email = "";
-                            MyStorage().password = "";
+                        //! sign in
+                        provider
+                            .signIn(
+                                controllerEmail.text, controllerPassword.text)
+                            .then((value) {
+                          if (value != null) {
+                            if (MyStorage().isRemember) {
+                              MyStorage().email = controllerEmail.text;
+                              MyStorage().password = controllerPassword.text;
+                            } else {
+                              MyStorage().email = "";
+                              MyStorage().password = "";
+                            }
+                            if (!context.mounted) return;
+                            context.go('/home');
                           }
-                          if (!context.mounted) return;
-                          context.go('/home');
-                        }
+                        });
                       }
                     },
                   )),
