@@ -585,6 +585,7 @@ class _ReservationPageState extends State<ReservationPage> {
                           child: TextFormField(
                             controller: controllerComment,
                             maxLines: 3,
+                            textCapitalization: TextCapitalization.sentences,
                             decoration: InputDecoration(
                               hintText: 'Agregar un comentario',
                               hintStyle: const TextStyle(color: kGrey),

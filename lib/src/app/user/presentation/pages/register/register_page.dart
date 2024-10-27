@@ -79,6 +79,7 @@ class RegisterPage extends StatelessWidget {
                 child: TextFormField(
                   controller: controllerFullName,
                   keyboardType: TextInputType.name,
+                  textCapitalization: TextCapitalization.words,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Ingrese nombre y apellido';
