@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_app/src/app/tennis/presentation/pages/favorite/favorite_page.dart';
+import 'package:tennis_app/src/app/tennis/presentation/pages/favorite/favorite_booking_page.dart';
 import 'package:tennis_app/src/app/tennis/presentation/pages/home/home_page.dart';
 import 'package:tennis_app/src/app/tennis/presentation/pages/reservation_list/reservation_list_page.dart';
 import 'package:tennis_app/src/app/user/presentation/provider/auth_provider.dart';
@@ -150,7 +150,7 @@ class _HomePageNavState extends State<HomePageNav> {
         children: const [
           HomePage(),
           ReservationListPage(),
-          FavoritePage(),
+          FavoriteBookingPage(),
         ],
       ),
     );

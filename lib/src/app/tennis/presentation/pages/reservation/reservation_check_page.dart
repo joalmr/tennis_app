@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/reservation_provider.dart';
 import 'package:tennis_app/src/shared/date_format.dart';
 import 'package:tennis_app/src/styles/colors.dart';
@@ -29,7 +28,6 @@ class _ReservationCheckPageState extends State<ReservationCheckPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ReservationProvider>();
-    final providerCourt = context.watch<CourtsProvider>();
 
     return Scaffold(
       body: provider.reservation == null
@@ -63,27 +61,23 @@ class _ReservationCheckPageState extends State<ReservationCheckPage> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: MediaQuery.of(context).size.height * 0.0325,
-                        right: 32,
-                        child: IconButton(
-                          onPressed: () {
-                            providerCourt
-                                .putFavorite(provider.reservation!.courts!.id!);
-                          },
-                          icon: Icon(
-                            providerCourt.isFavorite(
-                                    provider.reservation!.courts!.id!)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: providerCourt.isFavorite(
-                                    provider.reservation!.courts!.id!)
-                                ? kPrimaryColor
-                                : Colors.white,
-                            size: 32,
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: MediaQuery.of(context).size.height * 0.0325,
+                      //   right: 32,
+                      //   child: IconButton(
+                      //     onPressed: () {
+                      //     },
+                      //     icon: Icon(
+                      //       provider.reservation!.favorite!
+                      //           ? Icons.favorite
+                      //           : Icons.favorite_border,
+                      //       color: provider.reservation!.favorite!
+                      //           ? kPrimaryColor
+                      //           : Colors.white,
+                      //       size: 32,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(

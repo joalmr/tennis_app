@@ -29,6 +29,8 @@ class _ReservationPageState extends State<ReservationPage> {
 
   bool isEvaluated = false;
 
+  bool isFavorite = false;
+
   ValueNotifier<WeatherForecastEntity?> weatherEntity = ValueNotifier(null);
 
   @override
@@ -106,15 +108,13 @@ class _ReservationPageState extends State<ReservationPage> {
                   right: 32,
                   child: IconButton(
                     onPressed: () {
-                      providerCourt.putFavorite(widget.id);
+                      setState(() {
+                        isFavorite = !isFavorite;
+                      });
                     },
                     icon: Icon(
-                      providerCourt.isFavorite(widget.id)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: providerCourt.isFavorite(widget.id)
-                          ? kPrimaryColor
-                          : Colors.white,
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? kPrimaryColor : Colors.white,
                       size: 32,
                     ),
                   ),
@@ -454,7 +454,9 @@ class _ReservationPageState extends State<ReservationPage> {
                                     textButton: 'Pagar',
                                     onPressed: () async {
                                       await provider.createReservation(
-                                          controllerComment.text);
+                                        controllerComment.text,
+                                        isFavorite,
+                                      );
 
                                       if (provider.createdReservation == null) {
                                         if (!context.mounted) return;

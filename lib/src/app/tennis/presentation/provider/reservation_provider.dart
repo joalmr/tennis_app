@@ -21,6 +21,7 @@ class ReservationProvider extends ChangeNotifier {
 
   List<ReservationEntity> reservations = [];
   List<ReservationEntity> myReservations = [];
+  List<ReservationEntity> myReservationsFavorites = [];
   ReservationEntity? reservation;
   ReservationEntity? createdReservation;
 
@@ -41,7 +42,7 @@ class ReservationProvider extends ChangeNotifier {
     return response;
   }
 
-  createReservation(String comment) async {
+  createReservation(String comment, bool isFavorite) async {
     var createReservation = ReservationEntity(
       customerId: MyStorage().uid,
       courtId: court!.id,
@@ -50,6 +51,7 @@ class ReservationProvider extends ChangeNotifier {
       comment: comment,
       startTime: timeStart!,
       endTime: timeEnd!,
+      favorite: isFavorite,
     );
     createdReservation =
         await reservationUsecase.createReservation(createReservation);
@@ -61,6 +63,9 @@ class ReservationProvider extends ChangeNotifier {
     reservations = await reservationUsecase.getReservations();
     myReservations =
         reservations.where((x) => x.customerId == MyStorage().uid).toList();
+    myReservationsFavorites =
+        myReservations.where((x) => x.favorite == true).toList();
+    Logger().w(myReservationsFavorites);
     notifyListeners();
   }
 

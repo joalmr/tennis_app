@@ -39,15 +39,7 @@ class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
   Future<ReservationModel?> createReservation(
       ReservationEntity reservation) async {
     final response = await supabase.from('reservations').insert([
-      {
-        'customer_id': reservation.customerId,
-        'court_id': reservation.courtId,
-        'instructor_id': reservation.instructorId,
-        'reservation_date': reservation.reservationDate,
-        'comment': reservation.comment,
-        'start_time': reservation.startTime,
-        'end_time': reservation.endTime,
-      },
+      ReservationModel.fromEntity(reservation).toJson(),
     ]).select();
 
     return ReservationModel.fromJson(response.first);
@@ -66,6 +58,7 @@ class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
     comment,
     start_time,
     end_time,
+    favorite,
     courts(*),
     customers(*),
     instructors(*)

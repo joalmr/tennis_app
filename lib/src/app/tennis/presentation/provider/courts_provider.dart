@@ -4,7 +4,6 @@ import 'package:tennis_app/src/app/tennis/domain/entities/favorite_courts_entity
 import 'package:tennis_app/src/app/tennis/domain/entities/weather_entity.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/courts_usecase.dart';
 import 'package:tennis_app/src/app/tennis/domain/usecases/weather_usecase.dart';
-import 'package:tennis_app/src/shared/storage.data.dart';
 
 class CourtsProvider extends ChangeNotifier {
   final CourtsUsecase courtsUsecase;
@@ -15,7 +14,7 @@ class CourtsProvider extends ChangeNotifier {
     required this.weatherUsecase,
   }) {
     getCourts();
-    getFavoriteCourts();
+    // getFavoriteCourts();
   }
 
   List<CourtsEntity> courts = [];
@@ -50,24 +49,24 @@ class CourtsProvider extends ChangeNotifier {
     ];
   }
 
-  putFavorite(int idCourt) async {
-    await courtsUsecase.favoriteCourt(MyStorage().uid, idCourt);
-    getFavoriteCourts();
-    notifyListeners();
-  }
+  // putFavorite(int idCourt) async {
+  //   await courtsUsecase.favoriteCourt(MyStorage().uid, idCourt);
+  //   getFavoriteCourts();
+  //   notifyListeners();
+  // }
 
-  getFavoriteCourts() async {
-    favoriteCourts = await courtsUsecase.getFavoriteCourts(MyStorage().uid);
-    notifyListeners();
-  }
+  // getFavoriteCourts() async {
+  //   favoriteCourts = await courtsUsecase.getFavoriteCourts(MyStorage().uid);
+  //   notifyListeners();
+  // }
 
-  bool isFavorite(int idCourt) {
-    return favoriteCourts
-            .where((element) => element.courts!.id == idCourt)
-            .isNotEmpty
-        ? true
-        : false;
-  }
+  // bool isFavorite(int idCourt) {
+  //   return favoriteCourts
+  //           .where((element) => element.courts!.id == idCourt)
+  //           .isNotEmpty
+  //       ? true
+  //       : false;
+  // }
 }
 
 class DdlTime {

@@ -15,7 +15,8 @@ class ReservationModel extends ReservationEntity {
     super.reservationDate,
     super.comment,
     super.startTime,
-    super.endTime, //!
+    super.endTime,
+    super.favorite, //!
     super.courts,
     super.customers,
     super.instructors,
@@ -32,7 +33,8 @@ class ReservationModel extends ReservationEntity {
       reservationDate: json['reservation_date'],
       comment: json['comment'],
       startTime: json['start_time'],
-      endTime: json['end_time'], //
+      endTime: json['end_time'],
+      favorite: json['favorite'] ?? false, //
       courts: json['courts'] == null
           ? null
           : CourtsModel.fromJson(json['courts']), //!
@@ -58,7 +60,21 @@ class ReservationModel extends ReservationEntity {
       'comment': comment,
       'start_time': startTime,
       'end_time': endTime,
+      'favorite': favorite,
     };
+  }
+
+  factory ReservationModel.fromEntity(ReservationEntity reservation) {
+    return ReservationModel(
+      customerId: reservation.customerId,
+      courtId: reservation.courtId,
+      instructorId: reservation.instructorId,
+      reservationDate: reservation.reservationDate,
+      comment: reservation.comment,
+      startTime: reservation.startTime,
+      endTime: reservation.endTime,
+      favorite: reservation.favorite, //!
+    );
   }
 
   ReservationModel copyWith({
@@ -69,7 +85,8 @@ class ReservationModel extends ReservationEntity {
     String? reservationDate,
     String? comment,
     int? startTime,
-    int? endTime, //!
+    int? endTime,
+    bool? favorite, //!
     CourtsEntity? courts,
     CustomersEntity? customers,
     InstructorsEntity? instructors,
@@ -85,6 +102,7 @@ class ReservationModel extends ReservationEntity {
       comment: comment ?? this.comment,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
+      favorite: favorite ?? this.favorite, //!
       courts: courts ?? this.courts,
       customers: customers ?? this.customers,
       instructors: instructors ?? this.instructors,

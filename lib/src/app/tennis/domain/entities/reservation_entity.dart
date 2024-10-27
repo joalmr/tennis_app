@@ -11,8 +11,8 @@ class ReservationEntity extends Equatable {
   final String? reservationDate;
   final String? comment;
   final int? startTime;
-  final int? endTime; //!
-  // final String? courts;
+  final int? endTime;
+  final bool? favorite; //!
   final CourtsEntity? courts;
   final CustomersEntity? customers;
   final InstructorsEntity? instructors;
@@ -27,7 +27,8 @@ class ReservationEntity extends Equatable {
     this.reservationDate,
     this.comment,
     this.startTime,
-    this.endTime, //!
+    this.endTime,
+    this.favorite, //!
     this.courts,
     this.customers,
     this.instructors,
@@ -44,7 +45,8 @@ class ReservationEntity extends Equatable {
         reservationDate,
         comment,
         startTime,
-        endTime, //!
+        endTime,
+        favorite, //!
         courts,
         customers,
         instructors,
