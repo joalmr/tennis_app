@@ -120,7 +120,7 @@ class _ReservationCheckPageState extends State<ReservationCheckPage> {
                             children: [
                               Text(
                                 provider.reservation!.courts!.surfaceType!,
-                                style: Theme.of(context).textTheme.titleSmall,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                               Text(
                                 'Por hora',
@@ -133,13 +133,42 @@ class _ReservationCheckPageState extends State<ReservationCheckPage> {
                           ),
                           Row(
                             children: [
+                              Text(
+                                "Disponible",
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              const SizedBox(width: 4),
+                              Container(
+                                height: 8,
+                                width: 8,
+                                decoration: BoxDecoration(
+                                  color: kBlue,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
                               const Icon(
-                                Icons.location_on_outlined,
+                                Icons.calendar_month_outlined,
                                 color: Colors.black54,
                                 size: 20,
                               ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "${provider.reservation!.courts!.startString} a ${provider.reservation!.courts!.endString}",
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Image(
+                                width: 16,
+                                height: 16,
+                                image: AssetImage("assets/images/location.png"),
+                                fit: BoxFit.fill,
+                              ),
                               const SizedBox(width: 2),
-                              Text(provider.reservation!.courts!.location!),
+                              Text(provider.reservation!.courts!.location!,
+                                  style: Theme.of(context).textTheme.bodySmall),
                             ],
                           ),
                         ],

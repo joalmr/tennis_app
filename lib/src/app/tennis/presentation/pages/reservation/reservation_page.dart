@@ -161,10 +161,12 @@ class _ReservationPageState extends State<ReservationPage> {
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                               ),
-                              const Icon(
-                                Icons.calendar_month_outlined,
-                                color: Colors.black54,
-                                size: 20,
+                              const SizedBox(width: 4),
+                              const Image(
+                                width: 16,
+                                height: 16,
+                                image: AssetImage("assets/images/calendar.png"),
+                                fit: BoxFit.fill,
                               ),
                               const SizedBox(width: 4),
                               Text(
@@ -178,10 +180,11 @@ class _ReservationPageState extends State<ReservationPage> {
                     ),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.location_on_outlined,
-                          color: Colors.black54,
-                          size: 20,
+                        const Image(
+                          width: 16,
+                          height: 16,
+                          image: AssetImage("assets/images/location.png"),
+                          fit: BoxFit.fill,
                         ),
                         const SizedBox(width: 2),
                         Text(providerCourt.court?.location ?? ''),

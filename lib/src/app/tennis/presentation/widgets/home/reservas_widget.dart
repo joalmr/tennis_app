@@ -121,10 +121,11 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.calendar_month_outlined,
-                            color: Colors.black54,
-                            size: 20,
+                          const Image(
+                            width: 16,
+                            height: 16,
+                            image: AssetImage("assets/images/calendar.png"),
+                            fit: BoxFit.fill,
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -160,10 +161,11 @@ class _ReservasWidgetState extends State<ReservasWidget> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.watch_later_outlined,
-                            color: Colors.black54,
-                            size: 20,
+                          const Image(
+                            width: 16,
+                            height: 16,
+                            image: AssetImage("assets/images/watch.png"),
+                            fit: BoxFit.fill,
                           ),
                           const SizedBox(width: 8),
                           Text(

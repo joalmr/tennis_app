@@ -109,10 +109,11 @@ class _CanchasWidgetState extends State<CanchasWidget> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.calendar_month_outlined,
-                          color: Colors.black54,
-                          size: 20,
+                        const Image(
+                          width: 16,
+                          height: 16,
+                          image: AssetImage("assets/images/calendar.png"),
+                          fit: BoxFit.fill,
                         ),
                         const SizedBox(width: 8),
                         Text(
@@ -139,10 +140,12 @@ class _CanchasWidgetState extends State<CanchasWidget> {
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
-                        const Icon(
-                          Icons.calendar_month_outlined,
-                          color: Colors.black54,
-                          size: 20,
+                        const SizedBox(width: 4),
+                        const Image(
+                          width: 16,
+                          height: 16,
+                          image: AssetImage("assets/images/watch.png"),
+                          fit: BoxFit.fill,
                         ),
                         const SizedBox(width: 4),
                         Text(
