@@ -1,3 +1,3 @@
 # tennis_app
 
-[![Tennis](./assets/logo/logo.png)]
+![Tennis](./assets/logo/logo.png)
