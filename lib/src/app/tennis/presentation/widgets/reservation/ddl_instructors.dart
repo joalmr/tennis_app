@@ -5,7 +5,12 @@ import 'package:tennis_app/src/app/tennis/presentation/provider/reservation_prov
 import 'package:tennis_app/src/styles/colors.dart';
 
 class SelectInstructor extends StatefulWidget {
-  const SelectInstructor({super.key});
+  const SelectInstructor({
+    super.key,
+    this.controller,
+  });
+
+  final TextEditingController? controller;
 
   @override
   State<SelectInstructor> createState() => _SelectInstructorState();
@@ -20,6 +25,7 @@ class _SelectInstructorState extends State<SelectInstructor> {
     return provider.listInstructors.isEmpty
         ? const SizedBox()
         : DropdownMenu<DdlInstructor>(
+            controller: widget.controller,
             width: 220,
             label: const Text('Instructor'),
             initialSelection: provider.listInstructors.first,

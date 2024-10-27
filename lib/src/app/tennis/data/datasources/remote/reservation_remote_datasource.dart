@@ -4,6 +4,8 @@ import 'package:tennis_app/src/app/tennis/domain/entities/reservation_entity.dar
 
 abstract class ReservationRemoteDatasource {
   Future<List<ReservationModel>> getReservations();
+  Future<Map<String, dynamic>> evaluateReservation(
+      int courtId, String reservationDate);
   Future<ReservationModel?> createReservation(ReservationEntity reservation);
   Future<void> deleteReservation(int id);
 }
@@ -12,32 +14,43 @@ class ReservationRemoteDatasourceImpl implements ReservationRemoteDatasource {
   final supabase = Supabase.instance.client;
 
   @override
-  Future<ReservationModel?> createReservation(
-      ReservationEntity reservation) async {
+  Future<Map<String, dynamic>> evaluateReservation(
+      int courtId, String reservationDate) async {
     final evaluateReservation = await supabase
         .from('reservations')
         .select('*')
-        .eq('court_id', reservation.courtId!)
-        .eq('reservation_date', reservation.reservationDate!);
+        .eq('court_id', courtId)
+        .eq('reservation_date', reservationDate);
 
     if (evaluateReservation.length >= 3) {
-      return null;
-      //! mandar mensaje de error personalizado
+      return {
+        'status': 'error',
+        'message': 'Esta cancha ya tiene tres reservas en este día',
+      };
     } else {
-      final response = await supabase.from('reservations').insert([
-        {
-          'customer_id': reservation.customerId,
-          'court_id': reservation.courtId,
-          'instructor_id': reservation.instructorId,
-          'reservation_date': reservation.reservationDate,
-          'comment': reservation.comment,
-          'start_time': reservation.startTime,
-          'end_time': reservation.endTime,
-        },
-      ]).select();
-
-      return ReservationModel.fromJson(response.first);
+      return {
+        'status': 'success',
+        'message': 'Reserva exitosa',
+      };
     }
+  }
+
+  @override
+  Future<ReservationModel?> createReservation(
+      ReservationEntity reservation) async {
+    final response = await supabase.from('reservations').insert([
+      {
+        'customer_id': reservation.customerId,
+        'court_id': reservation.courtId,
+        'instructor_id': reservation.instructorId,
+        'reservation_date': reservation.reservationDate,
+        'comment': reservation.comment,
+        'start_time': reservation.startTime,
+        'end_time': reservation.endTime,
+      },
+    ]).select();
+
+    return ReservationModel.fromJson(response.first);
   }
 
   @override

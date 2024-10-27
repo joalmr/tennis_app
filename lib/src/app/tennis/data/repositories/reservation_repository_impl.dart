@@ -8,6 +8,12 @@ class ReservationRepositoryImpl implements ReservationRepository {
   ReservationRepositoryImpl({required this.remoteDatasource});
 
   @override
+  Future<Map<String, dynamic>> evaluateReservation(
+      int courtId, String reservationDate) async {
+    return await remoteDatasource.evaluateReservation(courtId, reservationDate);
+  }
+
+  @override
   Future<ReservationEntity?> createReservation(
       ReservationEntity reservation) async {
     return await remoteDatasource.createReservation(reservation);

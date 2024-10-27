@@ -24,6 +24,23 @@ class ReservationProvider extends ChangeNotifier {
   ReservationEntity? reservation;
   ReservationEntity? createdReservation;
 
+  // bool isEvaluated = false;
+  int totalPrice = 0;
+  int timePlay = 0;
+
+  isEvaluatedData(int totalPrice, int timePlay) {
+    this.totalPrice = totalPrice;
+    this.timePlay = timePlay;
+    notifyListeners();
+  }
+
+  Future<Map<String, dynamic>> evaluateReservation() async {
+    final response = await reservationUsecase.evaluateReservation(
+        court!.id!, date!.toIso8601String());
+    Logger().d(response);
+    return response;
+  }
+
   createReservation(String comment) async {
     var createReservation = ReservationEntity(
       customerId: MyStorage().uid,

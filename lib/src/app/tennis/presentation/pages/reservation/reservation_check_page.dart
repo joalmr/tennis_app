@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/courts_provider.dart';
 import 'package:tennis_app/src/app/tennis/presentation/provider/reservation_provider.dart';
 import 'package:tennis_app/src/shared/date_format.dart';
-import 'package:tennis_app/src/shared/primary_button.dart';
 import 'package:tennis_app/src/styles/colors.dart';
 
 class ReservationCheckPage extends StatefulWidget {
@@ -289,7 +288,7 @@ class _ReservationCheckPageState extends State<ReservationCheckPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Total a pagar',
+                              'Total pagado',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Column(
@@ -316,91 +315,6 @@ class _ReservationCheckPageState extends State<ReservationCheckPage> {
                               ],
                             ),
                           ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 36,
-                            child: OutlinedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStatePropertyAll(Colors.white),
-                                  foregroundColor:
-                                      WidgetStatePropertyAll(kBlue),
-                                  side: WidgetStatePropertyAll(
-                                      BorderSide(color: kBlue)),
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                  ),
-                                  textStyle: WidgetStatePropertyAll(
-                                    TextStyle(fontSize: 16),
-                                  )),
-                              onPressed: () {
-                                //TODO: reprogramar
-                              },
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    width: 12,
-                                    height: 12,
-                                    image: AssetImage(
-                                        "assets/images/calendar_blue.png"),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text('Reprogramar reserva'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 32, bottom: 8),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 53,
-                            child: KPrimaryButton(
-                              textButton: 'Pagar',
-                              onPressed: () async {
-                                //TODO: pago
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12, bottom: 8),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 53,
-                            child: OutlinedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStatePropertyAll(Colors.white),
-                                  foregroundColor:
-                                      WidgetStatePropertyAll(kTextColor),
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                  ),
-                                  textStyle: WidgetStatePropertyAll(
-                                    TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )),
-                              onPressed: () {
-                                context.pop();
-                              },
-                              child: const Text('Cancelar'),
-                            ),
-                          ),
                         ),
                         const SizedBox(height: 32),
                       ],

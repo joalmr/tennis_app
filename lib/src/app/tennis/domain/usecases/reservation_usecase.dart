@@ -10,6 +10,11 @@ class ReservationUsecase {
     return repository.getReservations();
   }
 
+  Future<Map<String, dynamic>> evaluateReservation(
+      int courtId, String reservationDate) {
+    return repository.evaluateReservation(courtId, reservationDate);
+  }
+
   Future<ReservationEntity?> createReservation(ReservationEntity reservation) {
     return repository.createReservation(reservation);
   }
